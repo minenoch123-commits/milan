@@ -203,4 +203,6 @@ async function saveRemote(){const t=$('#svb');if(t)t.lastChild.textContent='Guar
  if(r&&r.ok){dirty=false;if(t)t.lastChild.textContent='Guardado ✓'}else{if(t)t.lastChild.textContent='Guardar';alert(r?'PIN inválido. Sal y vuelve a entrar como DT.':'No se pudo guardar. Revisa tu conexión.')}}
 render();
 fetch('/.netlify/functions/data',{cache:'no-store'}).then(r=>r.json()).then(d=>{if(d&&Array.isArray(d.p)&&!dirty){S=d;render()}}).catch(()=>{});
-</script></body></html>
+</script>
+<script src="/extras.js"></script>
+</body></html>
