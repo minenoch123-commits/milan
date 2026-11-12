@@ -15,7 +15,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--gd);outline-off
 .hd{display:flex;align-items:center;gap:8px;padding:10px 14px 8px;flex:none}
 .hd .esc{width:36px;height:36px;object-fit:contain}
 .tt{flex:1;min-width:0}.ti{font:800 26px/1 var(--hf);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.sub{font:600 11px var(--hf);letter-spacing:2px;color:var(--mu);margin-top:2px;text-transform:uppercase}
+.sub{font:600 11px var(--hf);letter-spacing:2px;color:var(--mu);margin-top:2px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pill{background:var(--s2);border:1px solid var(--ln);border-radius:99px;padding:7px 12px;font:700 13px var(--hf);letter-spacing:1px;text-transform:uppercase;display:flex;align-items:center;gap:5px;transition:transform .15s,border-color .2s}
 .pill:hover{border-color:var(--gd2)}.pill.g{background:var(--gd);border-color:var(--gd);color:#1a1405}.pill.i{padding:8px}
 #mn{flex:1;min-height:0;display:flex;flex-direction:column;overflow:auto;padding:0 10px 8px;gap:8px}
@@ -34,10 +34,35 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--gd);outline-off
 .an .grid>*{animation:pop .45s var(--ez) both;animation-delay:calc(var(--i,0)*35ms)}
 .an .rw{animation:up .4s var(--ez) both;animation-delay:calc(var(--i,0)*45ms)}
 .ov{animation:sl .35s var(--ez)}.pk{animation:fd .25s}.pk .mc{animation:pop .35s var(--ez)}
-/* cancha */
-.fd{flex:1;min-height:0;position:relative;border-radius:18px;overflow:hidden;background:linear-gradient(#0a1020,#0d1b1a 60%,#0f2519);box-shadow:inset 0 0 0 1px #ffffff14;user-select:none;-webkit-user-select:none}
-.pitch{position:absolute;transform-origin:50% 100%;background:repeating-linear-gradient(#1d7a49 0 12.5%,#19693f 12.5% 25%);box-shadow:inset 0 0 0 1px #ffffff30;pointer-events:none}
-.pitch i{position:absolute;border:2px solid #ffffff80;display:block}
+/* cambio de solapa: la vista entra deslizando desde el lado de la pestaña */
+@keyframes viewR{from{opacity:.2;transform:translateX(34px)}}
+@keyframes viewL{from{opacity:.2;transform:translateX(-34px)}}
+#mn.an-r{animation:viewR .36s var(--ez) both}
+#mn.an-l{animation:viewL .36s var(--ez) both}
+@keyframes navpop{from{transform:scale(.9)}}
+.tab button.on{animation:navpop .26s var(--ez)}
+/* cancha + estadio */
+.fd{flex:1;min-height:0;position:relative;border-radius:18px;overflow:hidden;background:#060a11;box-shadow:inset 0 0 0 1px #ffffff14,0 16px 34px #0007;user-select:none;-webkit-user-select:none}
+.stad{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:
+ radial-gradient(95% 60% at 50% -4%,#1b2a42 0%,#0b1220 48%,#05090f 100%)}
+.stad::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,#ffffff2b 1px,transparent 1.35px);background-size:6px 6px;opacity:.32;
+ -webkit-mask-image:linear-gradient(#000 0 8%,#0007 15%,transparent 32%);mask-image:linear-gradient(#000 0 8%,#0007 15%,transparent 32%)}
+.stad::after{content:'';position:absolute;left:4%;right:4%;top:10.5%;height:1px;background:linear-gradient(90deg,transparent,#cfe0ff2e,transparent);box-shadow:0 0 20px #b9d4ff18}
+.stad .sd{position:absolute;top:0;bottom:0;width:7%;overflow:hidden;background:
+ radial-gradient(circle at 50% 14%,#ffffff14,transparent 58%),
+ linear-gradient(90deg,#03060b,#0b1424 58%,#03060b);box-shadow:inset 0 0 26px #000d}
+.stad .sd.l{left:0}.stad .sd.r{right:0;transform:scaleX(-1)}
+.stad .sd::after{content:'';position:absolute;inset:5% 12% 3%;opacity:.3;background-image:radial-gradient(circle,#c7d4ff33 1px,transparent 1.4px);background-size:5px 5px;
+ -webkit-mask-image:linear-gradient(transparent,#000 16% 76%,transparent);mask-image:linear-gradient(transparent,#000 16% 76%,transparent)}
+.stad .gl{position:absolute;inset:0;animation:amb 9s ease-in-out infinite;background:
+ radial-gradient(30% 20% at 5% 0%,#dce8ff33,transparent 68%),
+ radial-gradient(30% 20% at 95% 0%,#dce8ff33,transparent 68%),
+ radial-gradient(58% 26% at 50% -6%,#ffe6b52e,transparent 72%)}
+@keyframes amb{0%,100%{opacity:.72}50%{opacity:1}}
+.fd::after{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;border-radius:inherit;background:radial-gradient(118% 92% at 50% 44%,transparent 52%,#0009 100%)}
+.pitch{position:absolute;transform-origin:50% 100%;background:repeating-linear-gradient(180deg,#1f7f4c 0 12.5%,#1a6d41 12.5% 25%);box-shadow:inset 0 0 0 1px #ffffff42,inset 0 26px 54px #00000055,0 0 46px #0a3b2266;pointer-events:none;will-change:transform;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.pitch::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,#0000 48%,#00000033);box-shadow:inset 0 0 70px #0000003d}
+.pitch i{position:absolute;border:2px solid #ffffff8f;display:block;filter:drop-shadow(0 0 3px #ffffff1f)}
 .pl{position:absolute;transform:translate(-50%,-50%) scale(var(--s,1));width:var(--cw);z-index:var(--z,1);transition:transform .2s var(--ez)}
 .dt .pl{touch-action:none;cursor:grab}.pl.dg{z-index:9999;transform:translate(-50%,-50%) scale(calc(var(--s,1)*1.1))}
 @media(hover:hover){.pl:hover{transform:translate(-50%,-50%) scale(calc(var(--s,1)*1.07))}.pl.dg:hover{transform:translate(-50%,-50%) scale(calc(var(--s,1)*1.1))}}
@@ -105,7 +130,7 @@ input[type=range]{width:100%;accent-color:var(--gd)}
 let S=JSON.parse(document.getElementById('data').textContent);
 const POS=['POR','DEF','MED','DEL'],FM={5:['2-2','1-2-1','2-1-1'],7:['2-3-1','3-2-1','2-2-2'],9:['3-3-2','3-4-1','4-3-1'],11:['4-4-2','4-3-3','3-5-2','4-2-3-1','4-5-1']};
 if(!S.v){S.p.forEach(p=>{if(p.x!=null)p.x=+(50+(p.x-50)*(.8+.2*p.y/100)).toFixed(1)});S.v=2}
-let PIN=sessionStorage.getItem('pin')||'',dt=sessionStorage.getItem('dt')==='1',view='home',topK='ovr',dirty=false,lastV,lastL,chg=0;
+let PIN=sessionStorage.getItem('pin')||'',dt=sessionStorage.getItem('dt')==='1',view='home',topK='ovr',dirty=false,lastV,lastL,chg=0,dir=1;
 const $=s=>document.querySelector(s),E=(t,c,x)=>{const n=document.createElement(t);if(c)n.className=c;if(x!=null)n.textContent=x;return n},cl=(v,a,b)=>Math.max(a,Math.min(b,v));
 /* sonido (sintetizado, sin archivos) */
 let AC,snd=localStorage.getItem('snd')!=='0';
@@ -145,11 +170,13 @@ if(!dt){const b=E('button','btn');b.innerHTML=ic('lock',18)+' Ingresar como DT';
 const LP='<i style="inset:3%"></i><i style="left:3%;right:3%;top:50%;border-width:1.5px 0 0"></i><i style="left:37%;width:26%;aspect-ratio:1;top:50%;transform:translateY(-50%);border-radius:50%"></i><i style="left:28%;right:28%;top:3%;height:15%;border-top:0"></i><i style="left:28%;right:28%;bottom:3%;height:15%;border-bottom:0"></i><i style="left:40%;right:40%;bottom:3%;height:6%;border-bottom:0"></i><i style="left:40%;right:40%;top:3%;height:6%;border-top:0"></i>',
 LL='<i style="inset:3%"></i><i style="top:3%;bottom:3%;left:50%;border-width:0 0 0 1.5px"></i><i style="height:36%;aspect-ratio:1;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%"></i><i style="top:28%;bottom:28%;left:3%;width:15%;border-left:0"></i><i style="top:28%;bottom:28%;right:3%;width:15%;border-right:0"></i><i style="top:40%;bottom:40%;left:3%;width:6%;border-left:0"></i><i style="top:40%;bottom:40%;right:3%;width:6%;border-right:0"></i>';
 let GEO=null,PL=[];
-function geo(f){const W=f.clientWidth,H=f.clientHeight,pad=8,Ht=Math.max(100,H-pad-6),a=36*Math.PI/180,ca=Math.cos(a),sa=Math.sin(a),P=2.2*Ht;return{W,H,a,ca,sa,P,Hp:Ht/(ca-Ht*sa/P),ox:W/2,oy:H-pad}}
+function geo(f){const fullW=f.clientWidth,H=f.clientHeight,pad=10,W=fullW*.93,Ht=Math.max(100,(H-pad)*.9),phone=fullW<640,deg=phone?40:30,a=deg*Math.PI/180,ca=Math.cos(a),sa=Math.sin(a),P=(phone?2.2:2.8)*Ht;return{W,H,fullW,a,ca,sa,P,deg,Hp:Ht/(ca-Ht*sa/P),ox:fullW/2,oy:H-pad}}
 function proj(g,x,y){const dx=(x/100-.5)*g.W,dy=(y/100-1)*g.Hp,w=1-dy*g.sa/g.P;return{X:g.ox+dx/w,Y:g.oy+dy*g.ca/w,s:1/w}}
 function unproj(g,X,Y){const sx=X-g.ox,sy=Y-g.oy,dy=sy/(g.ca+sy*g.sa/g.P),w=1-dy*g.sa/g.P;return{x:(sx*w/g.W+.5)*100,y:(dy/g.Hp+1)*100}}
 function place(){if(!GEO)return;PL.forEach(({d,p})=>{const q=proj(GEO,p.x,p.y);d.style.left=q.X+'px';d.style.top=q.Y+'px';d.style.setProperty('--s',q.s.toFixed(3));d.style.setProperty('--z',Math.round(q.Y)+1)})}
-function vLine(){const fd=E('div','fd'),pt=E('div','pitch');pt.innerHTML=LP;fd.append(pt);
+function vLine(){const fd=E('div','fd');
+const st=E('div','stad');st.innerHTML='<span class="sd l"></span><span class="sd r"></span><span class="gl"></span>';fd.append(st);
+const pt=E('div','pitch');pt.innerHTML=LP;fd.append(pt);
 const tm=E('div','tm');tm.innerHTML='GRL<b>'+teamOvr()+'</b>';fd.append(tm);PL=[];
 S.p.filter(p=>p.st).forEach((p,n)=>{const d=E('div','pl');d.style.setProperty('--i',n);d.append(card(p,1));PL.push({d,p});
 if(!dt)d.onclick=()=>{SFX.open();peek(p)};else d.onpointerdown=ev=>{const sx=ev.clientX,sy=ev.clientY;let mv=0;d.setPointerCapture(ev.pointerId);
@@ -166,20 +193,21 @@ const L=S.p.filter(p=>p[topK]>0).sort((a,b)=>b[topK]-a[topK]).slice(0,10),ls=E('
 if(!L.length)ls.append(E('p','emp','Todavía no hay datos para este ranking.'));
 L.forEach((p,i)=>{const r=E('div','rw'),n=E('div');r.style.setProperty('--i',i);n.append(E('b',0,p.name),E('small',0,p.pos));r.append(E('span','rk',i+1),av(p),n,E('span','vv',p[topK]));r.onclick=()=>open(p);ls.append(r)});return [sg,ls]}
 function render(){const A=$('#app');if(!chg&&view!==lastV)chg=1;lastV=view;A.textContent='';
-const sub={home:S.sub,line:'Formación '+S.f+' · '+S.n+' en cancha',squad:'Plantel · '+S.p.length+' jugadores',top:'Los mejores del plantel'}[view];
+const sub={home:S.sub,line:S.f+' · '+S.n+' en cancha',squad:'Plantel · '+S.p.length+' jugadores',top:'Los mejores del plantel'}[view];
 const mn=E('main');mn.id='mn';mn.className=(dt?'dt':'')+(chg?' an':'');({home:vHome,line:vLine,squad:vSquad,top:vTop}[view])().forEach(n=>mn.append(n));
 const tb=E('nav','tab');[['home','Inicio','home'],['line','Alineación','field'],['squad','Plantel','squad'],['top','Top','trophy']].forEach(([v,l,i])=>{const b=E('button',v===view?'on':'');b.innerHTML=ic(i,22)+'<span>'+l+'</span>';b.onclick=()=>{if(v!==view)chg=1;view=v;render()};tb.append(b)});
 A.append(hdr(sub),mn,tb);chg=0;fit()}
 function fit(){const m=$('#mn');if(!m)return;
 if(view==='line'){const f=$('.fd');if(!f)return;const g=GEO=geo(f),pt=f.querySelector('.pitch');
-pt.style.cssText=`width:${g.W}px;height:${g.Hp}px;left:0;top:${g.oy-g.Hp}px;transform:perspective(${g.P}px) rotateX(36deg)`;
-const rows=[1,...S.f.split('-').map(Number)],k=rows.length-1,ys=rows.map((c,r)=>84-r*(66/k)),pr=ys.map(y=>proj(g,50,y));
-let cw=Math.min(...rows.map(c=>g.W/(c+1)*1.05),230);
-for(let r=0;r<k;r++){const gap=pr[r].Y-pr[r+1].Y;cw=Math.min(cw,gap/(1.49*pr[r].s)*1.1)}
+pt.style.cssText=`width:${g.W}px;height:${g.Hp}px;left:${(g.fullW-g.W)/2}px;top:${g.oy-g.Hp}px;transform:perspective(${g.P}px) rotateX(${g.deg}deg)`;
+const rows=[1,...S.f.split('-').map(Number)],k=rows.length-1,ys=rows.map((c,r)=>84-r*(66/k)),pr=ys.map(y=>proj(g,50,y)),big=g.fullW>=1000;
+let cw=Math.min(...rows.map(c=>g.W/(c+1)*1.05),big?290:230);
+for(let r=0;r<k;r++){const gap=pr[r].Y-pr[r+1].Y;cw=Math.min(cw,gap/(1.49*pr[r].s)*(big?1.55:1.22))}
 f.style.setProperty('--cw',Math.max(40,cw)+'px');place()}
-if(view==='squad'){const g=$('.grid'),n=S.p.length+(dt?1:0),W=g.clientWidth,H=g.clientHeight;let bw=0,bc=3;
-for(let c=1;c<=n;c++){const r=Math.ceil(n/c),w=Math.min((W-6*(c-1))/c,(H-6*(r-1))/r/1.49);if(w>bw){bw=w;bc=c}}
-bw=Math.min(230,Math.max(58,Math.floor(bw)));g.style.setProperty('--c',bc);g.style.setProperty('--cw',bw+'px');g.style.minHeight=Math.ceil(n/bc)*(bw*1.49+6)+'px'}}
+if(view==='squad'){const g=$('.grid'),n=S.p.length+(dt?1:0),W=g.clientWidth,H=g.clientHeight,gap=W>=900?12:6;let bw=0,bc=3;
+if(W>=900){const target=215;bc=Math.max(3,Math.min(n,Math.floor((W+gap)/(target+gap))));bw=Math.floor((W-gap*(bc-1))/bc)}
+else for(let c=1;c<=n;c++){const r=Math.ceil(n/c),w=Math.min((W-gap*(c-1))/c,(H-gap*(r-1))/r/1.49);if(w>bw){bw=w;bc=c}}
+bw=Math.min(280,Math.max(58,Math.floor(bw)));g.style.setProperty('--c',bc);g.style.setProperty('--cw',bw+'px');g.style.minHeight=Math.ceil(n/bc)*(bw*1.49+gap)+'px'}}
 new ResizeObserver(()=>fit()).observe(document.body);addEventListener('orientationchange',()=>setTimeout(fit,200));
 function sheet(title,fn){const M=$('#m');M.textContent='';const ov=E('div','ov'),sh=E('div','sh'),x=E('button','x');x.setAttribute('aria-label','Cerrar');x.innerHTML=ic('x');x.onclick=closeS;sh.append(x);if(title)sh.append(E('h3',0,title));fn(sh);ov.append(sh);M.append(ov)}
 const closeS=()=>{$('#m').textContent='';render()};
