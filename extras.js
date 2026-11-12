@@ -55,7 +55,6 @@ html,body{background:var(--bg)}
 
 /* cancha */
 .fd{background:repeating-linear-gradient(#1d7a49 0 12.5%,#19693f 12.5% 25%);box-shadow:inset 0 0 0 1px #ffffff20,inset 0 -40px 80px #0006,0 16px 34px #0007;border-radius:20px}
-.fd.L{background:repeating-linear-gradient(90deg,#1d7a49 0 12.5%,#19693f 12.5% 25%)}
 .fd i{border-color:#ffffff85}
 .tm{background:#08080ecc;box-shadow:0 4px 14px #0007}
 
@@ -182,33 +181,15 @@ input[type=datetime-local]{width:100%;padding:11px 12px;border:1px solid #2c2c40
 .bgprev b{display:block;font:700 13px var(--hf)}
 .bgprev small{display:block;color:#8e8ea0;font-size:11px;margin-top:3px}
 
-/* ================= CELULAR: dock flotante ================= */
-@media (max-width:899px){
-  .tab{width:min(600px,calc(100% - 20px));margin:8px auto calc(8px + env(safe-area-inset-bottom,0));flex:none;background:#12121be6;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid #ffffff14;border-radius:22px;padding:6px;gap:2px;box-shadow:0 12px 32px #0009;overflow:hidden}
-  .tab button{flex:1;min-width:0;background:none;border:0;color:#8b8b9d;display:flex;flex-direction:column;align-items:center;gap:3px;font:700 10.5px var(--hf);letter-spacing:.08em;text-transform:uppercase;padding:8px 0;border-radius:16px;transition:transform .12s ease,background .15s ease,color .15s ease}
-  .tab button span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
-  .tab button.on{color:#fff;background:linear-gradient(180deg,#f4323e,#c00d17);box-shadow:0 6px 18px #e8121f4d}
-}
-
-/* ================= PC ================= */
-@media (min-width:760px){
-  #mn{padding:8px 24px 12px;gap:12px}
-  .hd{padding:18px 24px 13px;gap:14px}.hd::after{left:24px}
-  .hd .esc{width:48px;height:48px}
-  .ti{font-size:32px}
-  .tiles b{font-size:36px}
-  .fig .cr{width:min(100cqw,100cqh*.671,560px)}
-  .sh{max-width:680px}
-  .tb{justify-content:center;gap:10px}.tb button{max-width:230px}
-  .edbox{width:min(360px,70vw)}
-}
-@media (min-width:900px){
-  .hd{padding-left:0;padding-right:0}.hd::after{left:0}
-  #mn{padding:8px 0 16px 24px}
-  .tab{width:auto;margin:0;background:none;border:0;box-shadow:none;border-radius:0;padding:10px 0;gap:6px;overflow:visible}
-  .tab button{background:none;border:0;color:#8b8b9d;display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:12px;font:700 15px var(--hf);letter-spacing:.08em;text-transform:uppercase;padding:13px 16px;border-radius:16px;transition:background .2s,color .2s}
-  .tab button.on{color:#fff;background:linear-gradient(180deg,#f4323e,#c00d17);box-shadow:0 6px 18px #e8121f4d}
-}
+/* ================= MENÚ ARRIBA (abajo a la derecha queda libre) ================= */
+#app{padding-bottom:max(48px,env(safe-area-inset-bottom,0))}
+.hd{order:0}.tab{order:1}#mn{order:2}
+.tab{margin:8px 14px 4px;padding:5px;gap:2px;background:#12121be6;border:1px solid #ffffff14;border-radius:18px}
+.tab button{flex:1;min-width:0;background:none;border:0;color:#8b8b9d;display:flex;flex-direction:column;align-items:center;gap:3px;font:700 10.5px var(--hf);letter-spacing:.08em;text-transform:uppercase;padding:7px 0;border-radius:14px;transition:background .15s ease,color .15s ease}
+.tab button span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.tab button.on{color:#fff;background:linear-gradient(180deg,#f4323e,#c00d17)}
+/* PC: misma columna simple, solo un poco más ancha */
+@media (min-width:700px){.tab{margin-left:24px;margin-right:24px}#mn{padding:8px 24px 12px}.hd{padding:16px 24px 12px}.hd::after{left:24px}}
 @media (hover:hover){
   .btn:hover,.tb button:hover{transform:translateY(-1px);filter:brightness(1.1)}
   .rw:hover,.mr:hover{background:#ffffff0a}
