@@ -1,12 +1,12 @@
 /* =====================================================================
-   extras.js · Milan Athletic Club
-   Capa de diseño + funciones nuevas. Se carga DESPUÉS del script principal.
+   extras.js · Milan Athletic Club · v2
+   Se carga DESPUÉS del script principal (index.html v2).
 
-   · Tipografía original (Barlow Condensed + Barlow)
-   · Rediseño con más vida: degradados, acentos, dock flotante, blur
-   · Compatible con PC: layouts anchos, límites de tamaño, hover
-   · EDITOR DE CARTA GLOBAL: movés/escalás los elementos UNA vez y se
-     aplican a TODAS las cartas (plantilla), incluida la bandera
+   · DOS plantillas de carta editables por separado:
+       - "Alineación": la carta chica que se ve en la cancha y el plantel
+       - "Carta": la carta grande que se abre al elegir un jugador
+   · Partidos, aptitud, capitán, bandera, cambio de media y avisos
+   · Layout de PC (barra lateral) y celular (dock flotante)
    ===================================================================== */
 
 /* ---------- estilos ---------- */
@@ -29,14 +29,11 @@ html,body{background:var(--bg)}
 .ti{font:800 27px/1 var(--hf);letter-spacing:.02em;background:linear-gradient(92deg,#fff 0%,#ffedd0 58%,var(--gd) 115%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .sub{font:600 10.5px var(--hf);letter-spacing:.24em;color:var(--mu);margin-top:4px}
 .pill{border-radius:999px;background:#181826;border:1px solid #2c2c40;padding:8px 13px;font:700 12px var(--hf);letter-spacing:.1em;color:#dcdce2}
+.pill.i{padding:9px}
 .pill.g{background:linear-gradient(135deg,#f4e0b4,#c8a25a);border-color:#c8a25a;color:#191307}
 
 /* contenido */
 #mn{padding:4px 14px 10px;gap:10px}
-@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-#mn>*{animation:pop .3s ease both}
-#mn>*:nth-child(2){animation-delay:.04s}#mn>*:nth-child(3){animation-delay:.08s}
-#mn>*:nth-child(4){animation-delay:.12s}#mn>*:nth-child(5){animation-delay:.16s}
 
 /* tarjetas de datos */
 .tiles{gap:10px}
@@ -46,12 +43,6 @@ html,body{background:var(--bg)}
 .tiles b{font:800 29px/1 var(--hf);color:#fff}
 .tiles div:last-child b{color:var(--gd)}
 .tiles small{color:#8f8fa2;letter-spacing:1.5px;font:700 10px var(--hf);text-transform:uppercase}
-
-/* dock inferior flotante */
-.tab{width:min(600px,calc(100% - 20px));margin:8px auto calc(8px + env(safe-area-inset-bottom,0));flex:none;background:#12121be6;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid #ffffff14;border-radius:22px;padding:6px;gap:2px;box-shadow:0 12px 32px #0009;overflow:hidden}
-.tab button{flex:1;min-width:0;background:none;border:0;color:#8b8b9d;display:flex;flex-direction:column;align-items:center;gap:3px;font:700 10.5px var(--hf);letter-spacing:.08em;text-transform:uppercase;padding:8px 0;border-radius:16px;transition:transform .12s ease,background .15s ease,color .15s ease}
-.tab button span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
-.tab button.on{color:#fff;background:linear-gradient(180deg,#f4323e,#c00d17);box-shadow:0 6px 18px #e8121f4d}
 
 /* botones */
 .btn,.tb button{background:#181826;border:1px solid #2c2c40;border-radius:15px;font:700 14px var(--hf);letter-spacing:.08em;text-transform:uppercase;transition:transform .12s ease,filter .15s ease,box-shadow .15s ease}
@@ -64,6 +55,7 @@ html,body{background:var(--bg)}
 
 /* cancha */
 .fd{background:repeating-linear-gradient(#1d7a49 0 12.5%,#19693f 12.5% 25%);box-shadow:inset 0 0 0 1px #ffffff20,inset 0 -40px 80px #0006,0 16px 34px #0007;border-radius:20px}
+.fd.L{background:repeating-linear-gradient(90deg,#1d7a49 0 12.5%,#19693f 12.5% 25%)}
 .fd i{border-color:#ffffff85}
 .tm{background:#08080ecc;box-shadow:0 4px 14px #0007}
 
@@ -94,12 +86,11 @@ input[type=range]{width:100%;accent-color:var(--gd);height:30px}
 
 /* ================= C A R T A ================= */
 .cr{border-radius:2.5cqw;filter:drop-shadow(0 14px 26px #000c);font-family:var(--hf)}
-.cr .ra{left:13%;width:27%;top:11.2%;text-align:center;font:800 20cqw/1 var(--hf);color:#f7e7bd;text-shadow:0 2px 12px #0009}
-.cr .po{left:13%;width:27%;top:30.2%;text-align:center;font:700 7.4cqw/1 var(--hf);letter-spacing:.16cqw;color:#efe6cf;font-style:normal;opacity:.95}
-.cr .ph{left:35%;top:7.2%;width:53%;height:46%}
+.cr .ra{text-align:center;font:800 20cqw/1 var(--hf);color:#f7e7bd;text-shadow:0 2px 12px #0009}
+.cr .po{text-align:center;font:700 7.4cqw/1 var(--hf);letter-spacing:.16cqw;color:#efe6cf;font-style:normal;opacity:.95}
 .cr .ph img{object-position:50% 18%}
-.cr .cn{left:10%;width:80%;top:48.6%;text-align:center;font:800 8.6cqw/1.06 var(--hf);text-transform:uppercase;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:#fff}
-.cr .cs{left:19%;width:62%;top:57.2%;display:grid;grid-template-columns:1fr 1fr;column-gap:10%;row-gap:1.4cqw}
+.cr .cn{text-align:center;font:800 8.6cqw/1.06 var(--hf);text-transform:uppercase;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:#fff}
+.cr .cs{display:grid;grid-template-columns:1fr 1fr;column-gap:10%;row-gap:1.4cqw}
 .cr .cs span{display:flex;align-items:baseline;gap:2cqw;font:600 calc(6.2cqw*var(--csf,1))/1 var(--hf);color:#e8dcb8}
 .cr .cs b{font:800 calc(8.8cqw*var(--csf,1))/1 var(--hf);color:#fff;min-width:7.5cqw;text-align:right}
 .cr img{display:block;height:auto;pointer-events:none}
@@ -112,7 +103,7 @@ input[type=range]{width:100%;accent-color:var(--gd);height:30px}
 .cr.mini .ctf{box-shadow:0 1px 4px #000b,0 0 0 .5cqw #00000060}
 
 /* flecha de aptitud */
-.cr .apt{width:8%;aspect-ratio:1;left:24%;top:71.4%;z-index:3;
+.cr .apt{aspect-ratio:1;z-index:3;
   clip-path:polygon(50% 0,100% 41%,72% 41%,72% 100%,28% 100%,28% 41%,0 41%);
   background:linear-gradient(168deg,#ffd9ab 0%,#ff7d47 32%,#f02a37 66%,#b20d19 100%);
   filter:drop-shadow(0 3px 7px #000c)}
@@ -120,7 +111,7 @@ input[type=range]{width:100%;accent-color:var(--gd);height:30px}
 .cr .apt i{position:absolute;inset:0;background:linear-gradient(180deg,#ffffff5c,#fff0 56%)}
 
 /* capitán */
-.cr .cap{width:13.5%;aspect-ratio:1;z-index:4;border-radius:50%;display:flex;align-items:center;justify-content:center;
+.cr .cap{aspect-ratio:1;z-index:4;border-radius:50%;display:flex;align-items:center;justify-content:center;
   background:radial-gradient(circle at 34% 26%,#fffae8,#f0d79b 34%,#c9a25a 62%,#8d6a25 100%);
   box-shadow:0 0 0 .55cqw #07070aB8,inset 0 0 0 1.25cqw #f8e8bd,inset 0 -.6cqw 1.2cqw #8a6a2466,0 6px 14px #000b,0 0 18px #d9b96e55}
 .cr .cap span{font:700 8cqw/1 var(--hf);color:#241a06;letter-spacing:-.06em;text-shadow:0 1px 0 #fff9}
@@ -131,7 +122,7 @@ input[type=range]{width:100%;accent-color:var(--gd);height:30px}
   background:linear-gradient(160deg,#123b24,#0a2417);color:#63e39a;border:1px solid #3fd47f4d;box-shadow:0 3px 9px #000b}
 .cr .dl.dn{background:linear-gradient(160deg,#3d1220,#260a11);color:#ff7b84;border-color:#ff5a624d}
 
-/* ================= EDITOR DE PLANTILLA ================= */
+/* ================= EDITOR DE PLANTILLAS ================= */
 .edbox{position:relative;width:min(320px,84vw);margin:4px auto 10px;user-select:none;-webkit-user-select:none}
 .edbox .cr{cursor:default}
 .edbox .ra,.edbox .po,.edbox .ph,.edbox .cn,.edbox .cs,.edbox .ce,.edbox .ctf,.edbox .apt,.edbox .cap,.edbox .dl{pointer-events:auto;cursor:grab;touch-action:none}
@@ -191,23 +182,35 @@ input[type=datetime-local]{width:100%;padding:11px 12px;border:1px solid #2c2c40
 .bgprev b{display:block;font:700 13px var(--hf)}
 .bgprev small{display:block;color:#8e8ea0;font-size:11px;margin-top:3px}
 
+/* ================= CELULAR: dock flotante ================= */
+@media (max-width:899px){
+  .tab{width:min(600px,calc(100% - 20px));margin:8px auto calc(8px + env(safe-area-inset-bottom,0));flex:none;background:#12121be6;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid #ffffff14;border-radius:22px;padding:6px;gap:2px;box-shadow:0 12px 32px #0009;overflow:hidden}
+  .tab button{flex:1;min-width:0;background:none;border:0;color:#8b8b9d;display:flex;flex-direction:column;align-items:center;gap:3px;font:700 10.5px var(--hf);letter-spacing:.08em;text-transform:uppercase;padding:8px 0;border-radius:16px;transition:transform .12s ease,background .15s ease,color .15s ease}
+  .tab button span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+  .tab button.on{color:#fff;background:linear-gradient(180deg,#f4323e,#c00d17);box-shadow:0 6px 18px #e8121f4d}
+}
+
 /* ================= PC ================= */
 @media (min-width:760px){
-  #app{max-width:1040px}
   #mn{padding:8px 24px 12px;gap:12px}
   .hd{padding:18px 24px 13px;gap:14px}.hd::after{left:24px}
   .hd .esc{width:48px;height:48px}
   .ti{font-size:32px}
   .tiles b{font-size:36px}
-  .fig .cr{width:min(100cqw,100cqh*.671,420px)}
-  .sh{max-width:640px}
+  .fig .cr{width:min(100cqw,100cqh*.671,560px)}
+  .sh{max-width:680px}
   .tb{justify-content:center;gap:10px}.tb button{max-width:230px}
-  .tab{width:min(640px,calc(100% - 48px))}
   .edbox{width:min(360px,70vw)}
+}
+@media (min-width:900px){
+  .hd{padding-left:0;padding-right:0}.hd::after{left:0}
+  #mn{padding:8px 0 16px 24px}
+  .tab{width:auto;margin:0;background:none;border:0;box-shadow:none;border-radius:0;padding:10px 0;gap:6px;overflow:visible}
+  .tab button{background:none;border:0;color:#8b8b9d;display:flex;flex-direction:row;align-items:center;justify-content:flex-start;gap:12px;font:700 15px var(--hf);letter-spacing:.08em;text-transform:uppercase;padding:13px 16px;border-radius:16px;transition:background .2s,color .2s}
+  .tab button.on{color:#fff;background:linear-gradient(180deg,#f4323e,#c00d17);box-shadow:0 6px 18px #e8121f4d}
 }
 @media (hover:hover){
   .btn:hover,.tb button:hover{transform:translateY(-1px);filter:brightness(1.1)}
-  .grid .cr:hover{transform:scale(1.04)}
   .rw:hover,.mr:hover{background:#ffffff0a}
   .tab button:hover{color:#d6d6e2}
   .tab button.on:hover{color:#fff}
@@ -242,9 +245,10 @@ const CT = [
 ];
 
 /* =====================================================================
-   PLANTILLA GLOBAL DE CARTA
-   Posición/tamaño de cada elemento en % del ancho (x) y alto (y) de la
-   carta. Se edita UNA vez en el editor y se aplica a TODAS las cartas.
+   PLANTILLAS DE CARTA (dos, independientes)
+     S.tpl.full = carta individual (la grande)
+     S.tpl.mini = carta de alineación / plantel (la chica)
+   Posición/tamaño de cada elemento en % del ancho (x) y alto (y).
    ===================================================================== */
 const TD = {
   ra:{x:13,y:11.2}, po:{x:13,y:30.2},
@@ -253,7 +257,17 @@ const TD = {
   esc:{x:20,y:36,w:13}, ctf:{x:11,y:71.4,w:10.5},
   apt:{x:24,y:71.4,w:8}, cap:{x:81,y:5.5,w:13.5}, dl:{x:68,y:70.6}
 };
-function tpl(){ const t = S.tpl || (S.tpl = {}); for (const k in TD) if (!t[k]) t[k] = { ...TD[k] }; return t }
+function tpl(kind){
+  kind = kind === 'mini' ? 'mini' : 'full';
+  let t = S.tpl;
+  if (!t || typeof t !== 'object') t = S.tpl = {};
+  if (t.ra) t = S.tpl = { full: t, mini: JSON.parse(JSON.stringify(t)) };   /* migra la plantilla única anterior */
+  ['full', 'mini'].forEach(k => {
+    const o = t[k] || (t[k] = {});
+    for (const e in TD) if (!o[e]) o[e] = { ...TD[e] };
+  });
+  return t[kind];
+}
 
 /* tamaño de texto base: [carta grande, carta chica] */
 const FZ = { ra:[20,21], po:[7.4,9.5], cn:[8.6,15], dl:[8.2,9.5] };
@@ -291,11 +305,11 @@ persist = function () {
   _persist();
 };
 
-/* ---------- carta (usa la plantilla global) ---------- */
+/* ---------- carta (usa la plantilla de su tipo) ---------- */
 card = function (p, mini) {
   const c = E('div', 'cr' + (mini ? ' mini' : ''));
   c.dataset.pid = p.id;
-  const T = tpl();
+  const T = tpl(mini ? 'mini' : 'full');
 
   const ra = E('div', 'ra', String(p.ovr ?? ''));
   const po = E('i', 'po', p.pos || '');
@@ -348,7 +362,7 @@ card = function (p, mini) {
 };
 
 /* =====================================================================
-   EDITOR DE PLANTILLA (global)
+   EDITOR DE PLANTILLAS
    ===================================================================== */
 const TPE = [
   ['ra','GRL'],['po','Posición'],['ph','Foto'],['cn','Nombre'],['cs','Estadísticas'],
@@ -356,16 +370,22 @@ const TPE = [
 ];
 const elSel = k => k === 'ph' ? '.ph' : k === 'esc' ? '.ce' : '.' + k;
 
-function tplEditor(){
-  sheet('Editor de carta · plantilla', sh => {
+function tplEditor(kind){
+  kind = kind === 'mini' ? 'mini' : 'full';
+  const mini = kind === 'mini';
+  sheet('Editor de carta', sh => {
     let SEL = 'esc';
+    sh.append(seg(['Alineación', 'Carta'], mini ? 'Alineación' : 'Carta', v => tplEditor(v === 'Alineación' ? 'mini' : 'full')));
     const dummy = { id:-1, name:'Jugador', pos:'DEL', num:10, ovr:90, g:12, a:8, s:2, st:1, ct:'ar', apt:'of', d:3, _cap:1 };
     const box = E('div', 'edbox');
     sh.append(box);
-    sh.append(E('p', 'tip', 'Tocá un elemento de la carta (o un botón de abajo) y arrastralo. Todo lo que muevas o escales acá se aplica a TODAS las cartas del club.'));
+    sh.append(E('p', 'tip', mini
+      ? 'Plantilla de ALINEACIÓN: la carta chica de la cancha y el plantel. Se aplica a todas esas cartas.'
+      : 'Plantilla de CARTA: la carta grande que se abre al elegir un jugador. Se aplica a todas esas cartas.'));
+    sh.append(E('p', 'tip', 'Tocá un elemento (o un botón de abajo) y arrastralo; el control cambia su tamaño.'));
 
     const chips = E('div', 'echips');
-    TPE.forEach(([k, l]) => { const ch = E('button', 'chip', l); ch.dataset.k = k; ch.onclick = () => { SEL = k; paint(); }; chips.append(ch) });
+    TPE.filter(([k]) => !(mini && k === 'cs')).forEach(([k, l]) => { const ch = E('button', 'chip', l); ch.dataset.k = k; ch.onclick = () => { SEL = k; paint(); }; chips.append(ch) });
     sh.append(chips);
 
     const sl = E('div'); sh.append(sl);
@@ -376,7 +396,7 @@ function tplEditor(){
       if (crEl) crEl.querySelectorAll('.selT').forEach(n => n.classList.remove('selT'));
       const el = crEl && crEl.querySelector(elSel(SEL));
       if (el) el.classList.add('selT');
-      const t = tpl()[SEL];
+      const t = tpl(kind)[SEL];
       sl.textContent = '';
       const mk = (lab, min, max, step, val, fn) => {
         const w = E('div', 'szr'), s = E('span', 0, lab), r = E('input');
@@ -384,10 +404,11 @@ function tplEditor(){
         r.oninput = () => fn(+r.value); r.onchange = () => persist();
         w.append(s, r); sl.append(w);
       };
-      if (SEL === 'ph') { mk('Ancho',20,70,.5,t.w,v=>{t.w=v;styleTpl(el,'ph',t,0)}); mk('Alto',20,70,.5,t.h,v=>{t.h=v;styleTpl(el,'ph',t,0)}) }
-      else if (SEL === 'cn' || SEL === 'cs') { mk('Ancho',30,96,1,t.w,v=>{t.w=v;styleTpl(el,SEL,t,0)}); mk('Texto',50,220,5,(t.f||1)*100,v=>{t.f=v/100;styleTpl(el,SEL,t,0)}) }
-      else if (SEL === 'ra' || SEL === 'po' || SEL === 'dl') { mk('Texto',50,220,5,(t.f||1)*100,v=>{t.f=v/100;styleTpl(el,SEL,t,0)}) }
-      else { const R = { esc:[6,32], ctf:[4,24], apt:[4,20], cap:[6,30] }[SEL]; mk('Tamaño',R[0],R[1],.5,t.w,v=>{t.w=v;styleTpl(el,SEL,t,0)}) }
+      const ap = () => styleTpl(el, SEL, t, mini);
+      if (SEL === 'ph') { mk('Ancho',20,70,.5,t.w,v=>{t.w=v;ap()}); mk('Alto',20,70,.5,t.h,v=>{t.h=v;ap()}) }
+      else if (SEL === 'cn' || SEL === 'cs') { mk('Ancho',30,96,1,t.w,v=>{t.w=v;ap()}); mk('Texto',50,220,5,(t.f||1)*100,v=>{t.f=v/100;ap()}) }
+      else if (SEL === 'ra' || SEL === 'po' || SEL === 'dl') { mk('Texto',50,220,5,(t.f||1)*100,v=>{t.f=v/100;ap()}) }
+      else { const R = { esc:[6,32], ctf:[4,24], apt:[4,20], cap:[6,30] }[SEL]; mk('Tamaño',R[0],R[1],.5,t.w,v=>{t.w=v;ap()}) }
     }
 
     function bindDrag(k, el, cr){
@@ -396,13 +417,14 @@ function tplEditor(){
         ev.preventDefault(); ev.stopPropagation();
         SEL = k; paint();
         const r = cr.getBoundingClientRect(), er = el.getBoundingClientRect();
-        const ox = (ev.clientX - er.left) / r.width * 100, oy = (ev.clientY - er.top) / r.height * 100;
+        const ox = (ev.clientX - r.left - (er.left - r.left)) / r.width * 100, oy = (ev.clientY - er.top) / r.height * 100;
         try { el.setPointerCapture(ev.pointerId) } catch (e) {}
         const mv = m => {
           let x = (m.clientX - r.left) / r.width * 100 - ox, y = (m.clientY - r.top) / r.height * 100 - oy;
           x = Math.max(-5, Math.min(100, x)); y = Math.max(-2, Math.min(100, y));
-          tpl()[k].x = +x.toFixed(1); tpl()[k].y = +y.toFixed(1);
-          styleTpl(el, k, tpl()[k], 0);
+          const t = tpl(kind)[k];
+          t.x = +x.toFixed(1); t.y = +y.toFixed(1);
+          styleTpl(el, k, t, mini);
         };
         const up = () => { el.removeEventListener('pointermove', mv); el.removeEventListener('pointerup', up); el.removeEventListener('pointercancel', up); persist() };
         el.addEventListener('pointermove', mv); el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up);
@@ -411,18 +433,19 @@ function tplEditor(){
 
     function build(){
       box.textContent = '';
-      crEl = card(dummy, false);
+      crEl = card(dummy, mini);
       box.append(crEl);
       TPE.forEach(([k]) => { const el = crEl.querySelector(elSel(k)); if (el) bindDrag(k, el, crEl) });
+      if (!crEl.querySelector(elSel(SEL))) SEL = 'esc';
       paint();
     }
     build();
 
     const bx = E('div', 'btns');
     const r1 = E('button', 'btn', 'Restablecer elemento');
-    r1.onclick = () => { delete S.tpl[SEL]; build() };
-    const r2 = E('button', 'btn o', 'Restablecer todo');
-    r2.onclick = () => { if (confirm('¿Volver toda la plantilla a su diseño original?')) { S.tpl = null; build() } };
+    r1.onclick = () => { delete S.tpl[kind][SEL]; persist(); build() };
+    const r2 = E('button', 'btn o', 'Restablecer plantilla');
+    r2.onclick = () => { if (confirm('¿Volver esta plantilla a su diseño original?')) { delete S.tpl[kind]; persist(); build() } };
     bx.append(r1, r2); sh.append(bx);
 
     const ok = E('button', 'btn g'); ok.textContent = 'Listo';
@@ -462,7 +485,7 @@ modal = function (p, isNew) {
   const eb = E('button', 'btn');
   eb.style.cssText = 'width:100%;margin-top:14px';
   eb.innerHTML = ic('edit', 18) + ' Editar plantilla de carta';
-  eb.onclick = () => tplEditor();
+  eb.onclick = () => tplEditor('full');
   wrap.append(eb);
 
   const cb = E('button', 'btn' + (S.cap === p.id ? ' g' : ''));
@@ -474,7 +497,7 @@ modal = function (p, isNew) {
   if (btns) sh.insertBefore(wrap, btns); else sh.append(wrap);
 };
 
-/* ---------- ajustes: editor de plantilla + vista previa de fondo ---------- */
+/* ---------- ajustes: plantillas + vista previa de fondo ---------- */
 function bgPreview(dataUri, isNew) {
   sheet('Fondo de carta', sh => {
     const big = E('div', 'bgbig');
@@ -501,13 +524,13 @@ settings = function () {
   if (!sh) return;
 
   const wrap = E('div');
-  wrap.append(E('label', 0, 'Carta · plantilla'));
-  const eb = E('button', 'btn');
-  eb.style.cssText = 'width:100%';
-  eb.innerHTML = ic('edit', 18) + ' Editor de carta (plantilla global)';
-  eb.onclick = () => tplEditor();
-  wrap.append(eb);
-  wrap.append(E('p', 'tip', 'La editás UNA vez — posición y tamaño de GRL, foto, nombre, escudo, bandera… — y se aplica a todas las cartas.'));
+  wrap.append(E('label', 0, 'Plantillas de carta'));
+  const tr = E('div', 'row2');
+  const t1 = E('button', 'btn'), t2 = E('button', 'btn');
+  t1.innerHTML = ic('edit', 18) + ' Alineación'; t1.onclick = () => tplEditor('mini');
+  t2.innerHTML = ic('edit', 18) + ' Carta'; t2.onclick = () => tplEditor('full');
+  tr.append(t1, t2); wrap.append(tr);
+  wrap.append(E('p', 'tip', 'Cada una se edita por separado y se aplica a todas sus cartas: GRL, foto, nombre, escudo, bandera…'));
 
   wrap.append(E('label', 0, 'Fondo de carta'));
   const row = E('div', 'row2');
@@ -567,7 +590,7 @@ vLine = function () {
   return w;
 };
 
-/* ---------- partidos (igual que antes) ---------- */
+/* ---------- partidos ---------- */
 const xR = m => m.gf > m.ga ? 'V' : m.gf < m.ga ? 'D' : 'E';
 const xPl = () => (S.m || []).filter(m => m.pl).sort((a, b) => new Date(b.d) - new Date(a.d));
 const xDt = m => new Date(m.d).toLocaleString('es-AR', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
@@ -652,21 +675,29 @@ vHome = function () {
     const b = E('div', 'nx'), t = E('div');
     t.append(E('b', 0, 'Próximo: ' + (n.t || 'Partido') + ' vs ' + (n.rival || 'Rival')), E('small', 0, xDt(n)));
     b.append(xEsc(n, 'mre'), t);
-    b.onclick = () => { view = 'match'; render() };
+    b.onclick = () => { view = 'match'; chg = 1; render() };
     w.splice(1, 0, b);
   }
   if (xPl().length) w.splice(1, 0, xForm());
   return w;
 };
 
-/* ---------- render con pestaña Partidos + migración a plantilla ---------- */
+/* ---------- render con pestaña Partidos + migraciones ---------- */
 render = function () {
   if (!S.tpl) {
     const src = (S.p || []).find(p => p.esc || p.ctp);
-    if (src) { S.tpl = {}; if (src.esc) S.tpl.esc = { ...src.esc }; if (src.ctp) S.tpl.ctf = { ...src.ctp } }
+    if (src) {
+      S.tpl = { full: {}, mini: {} };
+      ['full', 'mini'].forEach(k => {
+        if (src.esc) S.tpl[k].esc = { ...src.esc };
+        if (src.ctp) S.tpl[k].ctf = { ...src.ctp };
+      });
+    }
   }
   (S.p || []).forEach(p => { delete p.esc; delete p.ctp });
   S.m = S.m || [];
+  if (view !== lastV) chg = 1;
+  lastV = view;
   const A = $('#app'); A.textContent = '';
   const sub = {
     home: S.sub,
@@ -675,34 +706,37 @@ render = function () {
     top: 'Los mejores del plantel',
     match: 'Partidos · ' + xPl().length + ' jugados'
   }[view];
-  const mn = E('main'); mn.id = 'mn'; mn.className = dt ? 'dt' : '';
+  const mn = E('main'); mn.id = 'mn'; mn.className = (dt ? 'dt' : '') + (chg ? ' an' : '');
   ({ home: vHome, line: vLine, squad: vSquad, top: vTop, match: vMatch }[view])().forEach(n => mn.append(n));
   const tb = E('nav', 'tab');
   [['home','Inicio','home'],['line','Alineación','field'],['squad','Plantel','squad'],['match','Partidos','cal'],['top','Top','trophy']]
     .forEach(([v, l, i]) => {
       const b = E('button', v === view ? 'on' : '');
       b.innerHTML = ic(i, 22) + '<span>' + l + '</span>';
-      b.onclick = () => { view = v; render() };
+      b.onclick = () => { if (v !== view) chg = 1; view = v; render() };
       tb.append(b);
     });
   A.append(hdr(sub), mn, tb);
   document.documentElement.style.setProperty('--carta', 'url("' + (S.carta || 'carta.png') + '")');
+  chg = 0;
   fit();
 };
 
-/* ---------- tamaños para PC ---------- */
+/* ---------- tamaños (celular y PC; cancha horizontal en pantallas anchas) ---------- */
 fit = function () {
   const m = $('#mn'); if (!m) return;
   if (view === 'line') {
     const f = $('.fd'); if (!f) return;
     const W = f.clientWidth, H = f.clientHeight, rows = S.f.split('-').map(Number), k = rows.length, mx = Math.max(...rows);
-    f.style.setProperty('--cw', Math.max(34, Math.min(W / (mx + .5), H * .66 / k * 1.05 / 1.49, H * .2, 120)) + 'px');
+    f.style.setProperty('--cw', (isL()
+      ? Math.max(40, Math.min(W * .66 / k * .95, H * .9 / (mx * 1.49), 200))
+      : Math.max(34, Math.min(W / (mx + .5), H * .66 / k * 1.05 / 1.49, H * .2, 200))) + 'px');
   }
   if (view === 'squad') {
     const g = $('.grid'), n = S.p.length + (dt ? 1 : 0), W = g.clientWidth, H = g.clientHeight;
     let bw = 0, bc = 3;
     for (let c = 1; c <= n; c++) { const r = Math.ceil(n / c), w = Math.min((W - 10 * (c - 1)) / c, (H - 10 * (r - 1)) / r / 1.49); if (w > bw) { bw = w; bc = c } }
-    bw = Math.max(58, Math.min(Math.floor(bw), 170));
+    bw = Math.max(58, Math.min(Math.floor(bw), 230));
     g.style.setProperty('--c', bc); g.style.setProperty('--cw', bw + 'px');
     g.style.minHeight = Math.ceil(n / bc) * (bw * 1.49 + 10) + 'px';
   }
