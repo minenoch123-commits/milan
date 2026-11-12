@@ -894,3 +894,37 @@ fit = function () {
 };
 
 render();
+/* PARCHE 3 · pegar al final de extras.js, debajo del parche 2 (reemplaza su efecto en la cancha) */
+
+const CSZ = .9;   /* tamaño igual para TODAS las cartas de la cancha (subilo o bajalo si querés) */
+
+place = function () {
+  if (!GEO) return;
+  const run = () => PL.forEach(({ d, p }) => {
+    const q = proj(GEO, p.x, p.y);
+    d.style.left = q.X + 'px'; d.style.top = q.Y + 'px';
+    d.style.setProperty('--s', CSZ);
+    d.style.setProperty('--z', Math.round(q.Y) + 1);
+  });
+  if (document.querySelector('.pl.dg')) {
+    if (!place._q) place._q = requestAnimationFrame(() => { place._q = 0; run() });
+  } else run();
+};
+
+/* Campo SOLO más ancho: mismo largo de antes, y las líneas internas
+   (círculo, áreas) conservan su tamaño real en vez de ensancharse */
+const _fitQ = fit;
+fit = function () {
+  _fitQ();
+  if (view !== 'line') return;
+  const f = $('.fd'), pt = f && f.querySelector('.pitch'), g = GEO;
+  if (!pt || !g) return;
+  const Wd = g.W * (g.fullW > g.H * 1.15 ? 1.25 : 1.45), q = g.W / Wd, it = pt.children, sx = a => (50 - (50 - a) * q) + '%';
+  pt.style.cssText = `width:${Wd}px;height:${g.Hp}px;left:${(g.fullW - Wd) / 2}px;top:${g.oy - g.Hp}px;transform:perspective(${g.P}px) rotateX(${g.deg}deg)`;
+  it[2].style.left = sx(37); it[2].style.width = 26 * q + '%';
+  [3, 4].forEach(k => { it[k].style.left = sx(28); it[k].style.right = sx(28) });
+  [5, 6].forEach(k => { it[k].style.left = sx(40); it[k].style.right = sx(40) });
+};
+
+render();
+
