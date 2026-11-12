@@ -54,8 +54,8 @@ html,body{background:var(--bg)}
 .tb svg{color:var(--gd)}
 
 /* cancha */
-.fd{background:repeating-linear-gradient(#1d7a49 0 12.5%,#19693f 12.5% 25%);box-shadow:inset 0 0 0 1px #ffffff20,inset 0 -40px 80px #0006,0 16px 34px #0007;border-radius:20px}
-.fd i{border-color:#ffffff85}
+.fd{background:linear-gradient(#0a1020,#0d1b1a 60%,#0f2519);box-shadow:inset 0 0 0 1px #ffffff14,0 16px 34px #0007;border-radius:20px}
+.pitch i{border-color:#ffffff85}
 .tm{background:#08080ecc;box-shadow:0 4px 14px #0007}
 
 /* hojas y formularios */
@@ -701,26 +701,6 @@ render = function () {
   document.documentElement.style.setProperty('--carta', 'url("' + (S.carta || 'carta.png') + '")');
   chg = 0;
   fit();
-};
-
-/* ---------- tamaños (celular y PC; cancha horizontal en pantallas anchas) ---------- */
-fit = function () {
-  const m = $('#mn'); if (!m) return;
-  if (view === 'line') {
-    const f = $('.fd'); if (!f) return;
-    const W = f.clientWidth, H = f.clientHeight, rows = S.f.split('-').map(Number), k = rows.length, mx = Math.max(...rows);
-    f.style.setProperty('--cw', (isL()
-      ? Math.max(40, Math.min(W * .66 / k * .95, H * .9 / (mx * 1.49), 200))
-      : Math.max(34, Math.min(W / (mx + .5), H * .66 / k * 1.05 / 1.49, H * .2, 200))) + 'px');
-  }
-  if (view === 'squad') {
-    const g = $('.grid'), n = S.p.length + (dt ? 1 : 0), W = g.clientWidth, H = g.clientHeight;
-    let bw = 0, bc = 3;
-    for (let c = 1; c <= n; c++) { const r = Math.ceil(n / c), w = Math.min((W - 10 * (c - 1)) / c, (H - 10 * (r - 1)) / r / 1.49); if (w > bw) { bw = w; bc = c } }
-    bw = Math.max(58, Math.min(Math.floor(bw), 230));
-    g.style.setProperty('--c', bc); g.style.setProperty('--cw', bw + 'px');
-    g.style.minHeight = Math.ceil(n / bc) * (bw * 1.49 + 10) + 'px';
-  }
 };
 
 /* ---------- avisos ---------- */
