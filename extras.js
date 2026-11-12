@@ -787,3 +787,84 @@ setInterval(xTick, 3e4);
 document.addEventListener('visibilitychange', xTick);
 xTick();
 render();
+
+/* fixes.js · Milan Athletic Club
+   Cargar DESPUÉS de extras.js:  <script src="/extras.js"></script><script src="/fixes.js"></script> */
+
+document.head.append(Object.assign(document.createElement('style'), { textContent: `
+/* 1) BUG carta inspeccionada: #app pasa a ser su propio contexto de apilado,
+   así los z-index de las cartas (hasta ~600) nunca quedan por encima del overlay */
+#app{position:relative;z-index:0;isolation:isolate}
+#m{position:relative;z-index:100}
+.pk{background:radial-gradient(60% 42% at 50% 40%,#e8121f22,transparent 70%),#07070b;-webkit-backdrop-filter:none;backdrop-filter:none}
+.ov{background:#08080ff7;-webkit-backdrop-filter:none;backdrop-filter:none}
+.pk .mc{width:min(420px,70vw,calc((100dvh - 110px)*.671))}
+
+/* 2) Rendimiento: nada de filtros/animaciones caras en cada carta */
+.cr.mini,.cr.mini .ce,.cr.mini .apt,.cr.mini .ctf{filter:none}
+.pitch i{filter:none}
+.stad .gl{animation:none;opacity:.9}
+.fd{contain:layout paint}
+.pl{will-change:transform}
+.pl.dg{transition:none}
+
+/* 3) Solapas más chicas (celular vertical y tablets) */
+@media(max-width:999px){
+  .tab{margin:6px 12px 2px;padding:3px;border-radius:14px}
+  .tab button{padding:4px 0;font-size:9.5px;gap:1px;border-radius:11px}
+  .tab button svg{width:18px;height:18px}
+  .tabs button{padding:6px 0;font-size:12px}
+}
+
+/* 4) Celular en horizontal: menú lateral, cabecera mínima, botones al costado */
+@media(orientation:landscape) and (max-height:540px){
+  #app{max-width:none;height:100dvh;display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);
+    padding:env(safe-area-inset-top,0) max(10px,env(safe-area-inset-right,0)) 8px max(10px,env(safe-area-inset-left,0))}
+  .hd{grid-column:1/-1;grid-row:1;padding:3px 4px;gap:8px;border:0}
+  .hd::after{display:none}
+  .hd .esc{width:24px;height:24px}
+  .ti{font-size:16px}.sub{display:none}
+  .pill{padding:5px 9px;font-size:11px}.pill.i{padding:6px}
+  .tab{grid-column:1;grid-row:2;flex-direction:column;align-self:start;margin:2px 8px 0 0;padding:3px;gap:2px;max-height:100%;overflow:auto}
+  .tab button{padding:5px 7px;font-size:8.5px}
+  .tab button svg{width:17px;height:17px}
+  #mn{grid-column:2;grid-row:2;padding:2px 0 0;gap:8px;min-height:0}
+  #mn.v-line{flex-direction:row}
+  #mn.v-line .tb{flex-direction:column;width:62px;flex:none}
+  #mn.v-line .tb button{flex:1;padding:3px 0;font-size:9.5px;gap:2px;max-width:none}
+  #mn.v-home{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto auto auto minmax(0,1fr) auto;gap:8px;align-items:start}
+  #mn.v-home .tiles{grid-area:1/1}#mn.v-home .frm{grid-area:2/1}#mn.v-home .nx{grid-area:3/1}
+  #mn.v-home .btn{grid-area:5/1;max-width:300px}
+  #mn.v-home .fwrap{grid-area:1/2/6/3;align-self:stretch;height:100%}
+  .pk{flex-direction:row;gap:22px}
+  .pk .chips{flex-direction:column;flex-wrap:nowrap;align-items:flex-start}
+  .pk .mc{width:min(60vw,calc((100dvh - 24px)*.671))}
+}
+` }));
+
+/* 5) Cancha: menos estirada, ocupa menos y con más perspectiva 3D.
+   El ancho ya no depende del contenedor (en PC se estiraba): se calcula desde el alto. */
+geo = function (f) {
+  const fullW = f.clientWidth, H = f.clientHeight, pad = 8, wide = fullW > H * 1.15;
+  const deg = (fullW < 640 && !wide) ? 38 : 32, a = deg * Math.PI / 180, ca = Math.cos(a), sa = Math.sin(a);
+  const Ht = Math.max(90, (H - pad) * .8), P = 2.6 * Ht, Hp = Ht / (ca - Ht * sa / P);
+  const W = Math.min(fullW * .86, Hp * (wide ? .95 : .78));
+  return { W, H, fullW, a, ca, sa, P, deg, Hp, ox: fullW / 2, oy: H - pad };
+};
+
+/* 6) Lag al arrastrar: se agrupan las posiciones en un frame */
+const _place0 = place;
+place = function () {
+  if (document.querySelector('.pl.dg')) {
+    if (!place._q) place._q = requestAnimationFrame(() => { place._q = 0; _place0() });
+  } else _place0();
+};
+
+/* Esc cierra la carta o la hoja abierta (PC) */
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  const m = $('#m'); if (!m || !m.firstChild) return;
+  m.firstChild.classList.contains('pk') ? (m.textContent = '') : closeS();
+});
+
+render();
