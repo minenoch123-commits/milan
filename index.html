@@ -52,8 +52,6 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--gd);outline-off
 /* carta: cada elemento recibe su posición desde la plantilla */
 .cr{container-type:inline-size;position:relative;width:100%;aspect-ratio:600/894;background:var(--carta) center/100% 100% no-repeat;color:#f6ecd0;cursor:pointer;font-family:var(--hf)}
 .cr>*{position:absolute}
-.cr::after{content:'';position:absolute;inset:0;background:linear-gradient(110deg,#0000 38%,#ffffff26 50%,#0000 62%);transform:translateX(-130%);pointer-events:none}
-@media(hover:hover){.cr:hover::after{transition:transform .9s var(--ez);transform:translateX(130%)}}
 .cr .ra{text-align:center;font-weight:800;line-height:1;font-family:var(--hf);color:var(--gd)}
 .cr .po{text-align:center;font-weight:700;line-height:1;letter-spacing:.5cqw;font-style:normal;font-family:var(--hf)}
 .cr .ph{overflow:hidden;-webkit-mask-image:linear-gradient(#000 78%,#0000);mask-image:linear-gradient(#000 78%,#0000)}
@@ -69,7 +67,7 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--gd);outline-off
 .tiles div{background:var(--s1);border:1px solid var(--ln);border-radius:14px;padding:10px 2px 8px;text-align:center}
 .tiles b{display:block;font:800 28px/1 var(--hf)}.tiles div:last-child b{color:var(--gd)}
 .tiles small{color:var(--mu);letter-spacing:1.5px;font:700 10px var(--hf);text-transform:uppercase}
-.fig{flex:1;min-height:0;container-type:size;display:flex;justify-content:center;align-items:center}.fig .cr{width:min(100cqw,100cqh*.671);animation:fl 5s ease-in-out infinite}
+.fig{flex:1;min-height:0;container-type:size;display:flex;justify-content:center;align-items:center}.fig .cr{width:min(100cqw,100cqh*.671)}
 .lbl{flex:none;text-align:center;font:700 12px var(--hf);letter-spacing:3px;color:var(--mu);text-transform:uppercase}.lbl em{color:var(--gd);font-style:normal}
 .grid{flex:1;min-height:0;display:grid;grid-template-columns:repeat(var(--c,3),var(--cw));gap:10px;justify-content:center;align-content:center}
 .addc{aspect-ratio:600/894;border:2px dashed var(--ln);border-radius:12px;background:var(--s1);color:var(--mu);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font:700 11px var(--hf);text-transform:uppercase;transition:border-color .2s,color .2s}.addc:hover{border-color:var(--gd2);color:var(--gd)}
@@ -98,16 +96,7 @@ input[type=range]{width:100%;accent-color:var(--gd)}
 .f3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
 .tip{color:var(--mu);font-size:13px;margin:8px 0 0}
 .sec{margin:22px 0 0;padding-top:4px;border-top:1px solid var(--ln);font:800 18px var(--hf);text-transform:uppercase}
-/* tablet y PC */
-@media(min-width:700px){#app{max-width:1360px;padding-left:20px;padding-right:20px}.hd .ti{font-size:32px}.sh{max-width:720px}.mc{width:min(320px,34vw,46dvh)}.pk .mc{width:min(380px,40vw,62dvh)}}
-@media(min-width:900px){
-#app{display:grid;grid-template-columns:200px 1fr;grid-template-rows:auto 1fr}
-.hd{grid-column:1/-1;padding:16px 0 12px}
-.tab{grid-column:1;grid-row:2;flex-direction:column;justify-content:flex-start;gap:6px;border:0;background:none;padding:10px 0}
-.tab button{flex-direction:row;justify-content:flex-start;gap:12px;padding:13px 16px;font-size:15px}
-.tab button:not(.on):hover{background:var(--s1);color:var(--tx)}
-#mn{grid-column:2;grid-row:2;padding:0 0 16px 24px}
-.tiles b{font-size:34px}.tiles div{padding:14px 2px 12px}}
+@media(min-width:700px){#app{max-width:640px}.mc{width:min(280px,60vw,40dvh)}.pk .mc{width:min(320px,74vw,56dvh)}}
 @media(prefers-reduced-motion:reduce){*,::after{transition:none!important;animation:none!important}}
 </style></head><body><div id="app"></div><div id="m"></div>
 <script id="data" type="application/json">{"team":"Milan","n":7,"f":"2-3-1","kit":{"s":"r","a":"#d9141c","b":"#111111","g":"#f5a500"},"p":[{"id":1,"name":"Seba","pos":"POR","num":1,"ovr":81,"grl":70,"g":0,"a":0,"s":43,"st":1,"x":50,"y":86},{"id":2,"name":"Mauri","pos":"DEF","num":2,"ovr":70,"grl":70,"g":0,"a":0,"s":0,"st":1,"x":27.8,"y":68.1},{"id":3,"name":"Victor","pos":"DEF","num":3,"ovr":70,"grl":70,"g":0,"a":0,"s":0,"st":1,"x":70.7,"y":69.5},{"id":4,"name":"Kroos","pos":"MED","num":8,"ovr":70,"grl":70,"g":0,"a":0,"s":0,"st":0,"x":25,"y":39.3},{"id":5,"name":"Matute","pos":"MED","num":4,"ovr":70,"grl":70,"g":0,"a":0,"s":0,"st":0,"x":50,"y":39.3},{"id":6,"name":"Benja","pos":"MED","num":7,"ovr":78,"grl":70,"g":4,"a":6,"s":0,"st":1,"x":84.6,"y":47.9},{"id":7,"name":"Benicio","pos":"DEL","num":10,"ovr":83,"grl":70,"g":12,"a":5,"s":0,"st":1,"x":51.0,"y":34.5},{"id":8,"name":"Attak","pos":"MED","num":5,"ovr":81,"grl":65,"g":0,"a":0,"s":0,"st":1,"x":49.9,"y":54.9},{"id":9,"name":"Fran","pos":"DEL","num":9,"ovr":70,"grl":65,"g":0,"a":0,"s":0,"st":0,"x":33.3,"y":16},{"id":10,"name":"Bzz","pos":"MED","num":15,"ovr":70,"grl":65,"g":0,"a":0,"s":0,"st":0},{"id":11,"name":"Troniz","pos":"MED","num":20,"ovr":70,"grl":60,"g":0,"a":0,"s":0,"st":0},{"id":12,"name":"Ramix","pos":"MED","num":23,"ovr":70,"grl":60,"g":0,"a":0,"s":0,"st":0},{"id":13,"name":"Ciro","pos":"MED","num":32,"ovr":70,"grl":60,"g":0,"a":0,"s":0,"st":0},{"id":14,"name":"Kevinho","pos":"MED","num":11,"ovr":78,"grl":60,"g":7,"a":4,"s":0,"st":1,"x":16.4,"y":47.9}],"sub":"Athletic Club · 2026"}</script>
@@ -130,7 +119,7 @@ const FA=()=>{const a=(S.tpl&&S.tpl.full&&S.tpl.full.ph)||{w:53,h:46};return a.h
 const img=p=>p.img&&/^data:image\/(png|jpeg|webp);base64,[\w+\/=]+$/.test(p.img)?p.img:null;
 const num=p=>String(p.num??'').replace(/\D/g,'').slice(0,2),teamOvr=()=>{const s=S.p.filter(p=>p.st);return s.length?Math.round(s.reduce((a,p)=>a+p.ovr,0)/s.length):0};
 const api=async b=>{try{const r=await fetch('/.netlify/functions/data',{method:'POST',body:JSON.stringify(b)});return await r.json()}catch(e){return null}};
-const isL=()=>innerWidth>=innerHeight*1.2&&innerWidth>=600,pxy=(p,l)=>l?[100-p.y,p.x]:[p.x,p.y];
+const isL=()=>false,pxy=(p,l)=>l?[100-p.y,p.x]:[p.x,p.y];
 function persist(){dirty=true;S.ts=Date.now();const t=$('#svb');if(t)t.lastChild.textContent='Guardar'}
 function layout(f){S.f=f;const rows=[1,...f.split('-').map(Number)],k=rows.length-1,st=S.p.filter(p=>p.st).sort((a,b)=>POS.indexOf(a.pos)-POS.indexOf(b.pos)||a.id-b.id);let i=0;
 rows.forEach((c,r)=>{const pos=r===0?'POR':r===k?'DEL':r===1?'DEF':'MED',y=84-r*(66/k);for(let j=0;j<c&&i<st.length;j++,i++){const p=st[i];p.pos=pos;p.x=+(100*(j+1)/(c+1)).toFixed(1);p.y=+y.toFixed(1)}})}
