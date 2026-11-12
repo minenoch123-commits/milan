@@ -868,3 +868,29 @@ document.addEventListener('keydown', e => {
 });
 
 render();
+/* PARCHE 2 · pegar al final de extras.js, debajo del bloque anterior (fixes.js) */
+
+document.head.append(Object.assign(document.createElement('style'), { textContent: `
+/* menos peso gráfico: sin sombras difusas gigantes en la cancha */
+.pitch{box-shadow:inset 0 0 0 1px #ffffff42}
+.pitch::after{box-shadow:none}
+.stad::before{opacity:.22}
+.fd{transform:translateZ(0)}
+.an .pl{animation-duration:.3s}
+.cr.mini .cap{box-shadow:0 0 0 .55cqw #07070bb8,inset 0 0 0 1.25cqw #f8e8bd}
+.cr.mini .dl,.cr.mini .ctf{box-shadow:none}
+` }));
+
+/* Cancha más ancha que el cuadro: se dibuja más grande (se recorta en los bordes)
+   pero las cartas conservan su posición, así que no se mueve nada de la alineación */
+const _fitP = fit;
+fit = function () {
+  _fitP();
+  if (view !== 'line') return;
+  const f = $('.fd'), pt = f && f.querySelector('.pitch'), g = GEO;
+  if (!f || !pt || !g) return;
+  const Wd = g.W * (g.fullW > g.H * 1.15 ? 1.25 : 1.45), Hd = g.Hp * 1.2;
+  pt.style.cssText = `width:${Wd}px;height:${Hd}px;left:${(g.fullW - Wd) / 2}px;top:${g.oy - g.Hp}px;transform-origin:50% ${g.Hp}px;transform:perspective(${g.P}px) rotateX(${g.deg}deg)`;
+};
+
+render();
